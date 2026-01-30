@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>夏弥聊天室</title>
+    <style>body{background:#0a0a2a;color:#fff;}</style>
+</head>
+<body>
+    <h1>🐉 夏弥聊天室</h1>
+    <div id="chat"></div>
+    <input id="input" placeholder="对夏弥说...">
+    <button onclick="send()">发送</button>
+    
+    <script>
+    async function send() {
+        const text = document.getElementById('input').value;
+        document.getElementById('chat').innerHTML += '<div>师兄：'+text+'</div>';
+        
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({message: text})
+        });
+        const data = await res.json();
+        document.getElementById('chat').innerHTML += '<div>夏弥：'+data.reply+'</div>';
+    }
+    </script>
+</body>
+</html>
